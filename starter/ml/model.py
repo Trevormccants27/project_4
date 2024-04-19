@@ -60,3 +60,27 @@ def inference(model, X):
         Predictions from the model.
     """
     return model.predict(X)
+
+
+def compute_model_metrics_per_slice(y, preds, slice):
+    """
+    Tests the trained machine learning model using precision, recall, and F1 for each slice category.
+
+    Inputs
+    ------
+    y : np.array
+        Known labels, binarized.
+    preds : np.array
+        Predicted labels, binarized.
+    slice : np.array
+        Slide category for each sample, categorical.
+    Returns
+    -------
+    results : Dict[slice, (precision: float, recall: float, fbeta: float)]
+    """
+    results = {}
+    for s in set(slice):
+        idx = slice == s
+        results[s] = compute_model_metrics(y[idx], preds[idx])
+
+    return results

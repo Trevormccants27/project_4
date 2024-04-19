@@ -6,8 +6,8 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import os
 import pickle
-from . ml.data import process_data
-from . ml.model import train_model 
+from ml.data import process_data
+from ml.model import train_model, compute_model_metrics, inference, compute_model_metrics_per_slice
 
 # Add code to load in the data.
 data = pd.read_csv(os.path.join('data', 'census.csv'))
@@ -39,3 +39,17 @@ model = train_model(X_train, y_train)
 
 with open(os.path.join('model', 'model.pkl'), 'wb') as f:
     pickle.dump(model, f)
+
+# Test model
+preds = inference(model, X_test)
+precision, recall, fbeta = compute_model_metrics(y_test, preds)
+print('OVERALL METRICS')
+print(f'precision: {precision}')
+print(f'recall: {recall}')
+print(f'fbeta: {fbeta}')
+
+with open('slice_output.txt', 'w') as f:
+    for cat in cat_features:
+        results = compute_model_metrics_per_slice(y_test, preds, test[cat])
+        f.write(f'METRICS FOR {cat}\n')
+        f.write(str(results) + '\n')
