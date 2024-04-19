@@ -9,8 +9,6 @@ import json
 from starter.ml.model import inference
 from starter.ml.data import process_data
 
-os.system('python starter/train_model.py')
-
 app = FastAPI()
 
 class CensusRow(BaseModel):
