@@ -37,8 +37,13 @@ X_test, y_test, encoder, lb = process_data(
 # Train and save a model.
 model = train_model(X_train, y_train)
 
+save_data = {
+    'model': model,
+    'encoder': encoder,
+    'lb': lb,
+}
 with open(os.path.join('model', 'model.pkl'), 'wb') as f:
-    pickle.dump(model, f)
+    pickle.dump(save_data, f)
 
 # Test model
 preds = inference(model, X_test)
