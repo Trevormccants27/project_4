@@ -12,21 +12,20 @@ from starter.ml.data import process_data
 app = FastAPI()
 
 class CensusRow(BaseModel):
-    age: int
-    workclass: str
-    fnlgt: int
-    education: str
-    education_num: int = Field(alias='education-num')
-    marital_status: str = Field(alias='marital-status')
-    occupation: str
-    relationship: str
-    race: str
-    sex: str
-    capital_gain: int = Field(alias='capital-gain')
-    capital_loss: int = Field(alias='capital-loss')
-    hours_per_week: int = Field(alias='hours-per-week')
-    native_country: str = Field(alias='native-country')
-    # salary: str
+    age: int = Field(examples=[50])
+    workclass: str = Field(examples=['Self-emp-not-inc'])
+    fnlgt: int = Field(examples=[83311])
+    education: str = Field(examples=['Bachelors'])
+    education_num: int = Field(alias='education-num', examples=[13])
+    marital_status: str = Field(alias='marital-status', examples=['Married-civ-spouse'])
+    occupation: str = Field(examples=['Exec-managerial'])
+    relationship: str = Field(examples=['Husband'])
+    race: str = Field(examples=['White'])
+    sex: str = Field(examples=['Male'])
+    capital_gain: int = Field(alias='capital-gain', examples=[0])
+    capital_loss: int = Field(alias='capital-loss', examples=[0])
+    hours_per_week: int = Field(alias='hours-per-week', examples=[13])
+    native_country: str = Field(alias='native-country', examples=['United-States'])
 
 @app.get('/')
 def welcome():
